@@ -20,11 +20,11 @@ import collections
 # dictionary = { [A:'X-Coordinate', B:'X-Coordinate'],[A:'Y-Coordinate', B:'Y-Coordinate'] }
 def parse_coordinates():
 
-    #   [... for s in all_examples] For each element in your list:
+    #   [... for s in all_examples] For each element in the list:
     #   s.split(',')[1:] Split it by commas, then take each element after the first
     #   (...) for x in and turn it into a list of tuples
     #   s[0], int(x) of the first letter, with that element converted to integer
-    #   zip(*[...]) now transpose your lists of tuples
+    #   zip(*[...]) now transpose lists of tuples
     #   map(dict, ...) and turn each one into a dictionary!
     dictionary = map(dict, zip(*[[(s[0], x.rstrip()) for x in s.split(',')[1:]] for s in all_examples]))
 
@@ -67,7 +67,4 @@ else:
             # store all the unfiltered examples as list
             all_examples = file.readlines()
 
-        examples = parse_coordinates()
-
-        initial_centroids()
 
