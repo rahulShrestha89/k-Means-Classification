@@ -14,6 +14,27 @@
 
 import os
 
+
+def make_attributes():
+
+    return 0
+
+
+def get_coordinates():
+
+    return 0
+
+
+def get_centroids():
+
+    # a dictionary to hold the centroids based on the number of clusters
+    centroids = {}
+
+    for i in range(len(number_of_clusters)):
+        centroids[i+1] = 1
+
+    return 0
+
 # get the file name from the user
 file_name = input("Enter the input file name: ")
 
@@ -29,8 +50,8 @@ else:
     if os.stat(file_name).st_size <= 0:
         print("Not enough data in the input file.")
     else:
-        # read and stores the number of examples, attributes.
-        # as well as the name of attributes, and all examples
+        # read and stores the number of examples, attributes, clusters.
+        # as well as the examples
         with open(file_name, 'r') as file:
 
             number_of_examples = int(file.readline())
@@ -41,4 +62,8 @@ else:
             all_examples = file.readlines()
 
         print(all_examples)
+
+        make_attributes()
+        get_coordinates()
+        get_centroids()
 
