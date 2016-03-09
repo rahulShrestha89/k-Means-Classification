@@ -19,14 +19,15 @@ import os
 # list = { [A:'X-Coordinate', B:'X-Coordinate'],[A:'Y-Coordinate', B:'Y-Coordinate'] }
 def parse_coordinates():
 
-    list_of_coordinate = list()
+    #   [... for s in all_examples] For each element in the list:
+    #   s.split(',')[1:] Split it by commas, then take each element after the first
+    #   (...) for x in and turn it into a list of tuples
+    #   s[0], int(x) of the first letter, with that element converted to integer
+    #   zip(*[...]) now transpose lists of tuples
+    #   map(dict, ...) and turn each one into a dictionary!
+    list_of_coordinates = map(dict, zip(*[[(s[0], x.rstrip()) for x in s.split(',')[1:]] for s in all_examples]))
 
-    list_value = [x.split(",") for x in all_examples]
-    for col in range(1, len(list_value[0])):
-        list_of_coordinate.append({l[0]: int(l[col]) for l in list_value})
-    print(list_of_coordinate)
-
-    return list_of_coordinate
+    return list_of_coordinates
 
 
 def initial_centroids():
@@ -65,6 +66,4 @@ else:
             # store all the unfiltered examples as list
             all_examples = file.readlines()
 
-        examples = parse_coordinates()
-        print(type(examples))
 
