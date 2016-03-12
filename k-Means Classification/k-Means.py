@@ -45,6 +45,34 @@ def initial_centroids():
     return centroids
 
 
+# calculate Euclidean distance between data sets
+# and a cluster center (centroid)
+def calculate_euclidean_distance(example, centroid):
+
+    distance = 0
+
+    return 0
+
+
+# Assign objects(examples) to their closest cluster center (centroids)
+# according to the Euclidean distance function
+def make_clusters():
+
+    examples = parse_examples()     # stores parsed examples from text file
+    centroids = initial_centroids()     # stores initial centroids
+
+    # Consider two cluster centers with two different data set.
+    # If data_A is closer to cluster_1 than cluster_B
+    # then cluster_B contains data_A
+
+    # loop through all the examples
+    for i_key in parse_examples().keys():
+        # loop through both of the centroids i.e. cluster centers
+        for j_key in initial_centroids().keys():
+            calculate_euclidean_distance(examples[i_key], centroids[j_key])
+    return 0
+
+
 # get the file name from the user
 file_name = input("Enter the input file name: ")
 
@@ -71,5 +99,5 @@ else:
             # store all the unfiltered examples as list
             all_examples = file.readlines()
 
-        # get initial centroids
-        print(initial_centroids())
+        make_clusters()
+
