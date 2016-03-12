@@ -16,7 +16,7 @@ import os
 
 
 # create a dictionary of coordinates i.e. keys with multiple values
-# dict = {"A":'X-Coordinate,Y-Coordinate', "B":'X-Coordinate,Y-Coordinate'}
+# dict = {"A":[X-Coordinate,Y-Coordinate'], "B":[X-Coordinate,Y-Coordinate]}
 def parse_examples():
 
     # stores the examples in a dictionary
@@ -29,15 +29,21 @@ def parse_examples():
     return coordinates
 
 
+# centroids are the center of the clusters,
+# so the total number of centroids will be equal to the
+# total number of clusters
 def initial_centroids():
 
     # a dictionary to hold the centroids based on the number of clusters
     centroids = {}
 
-    for i in range(number_of_clusters):
-        centroids[i+1] = 1
+    # select (number of clusters) centroids from the text file (dictionary is unordered)
+    for values in all_examples[:number_of_clusters]:
+        split_list = values.split(',')
+        centroids[split_list[0]] = [int(val.rstrip()) for val in split_list[1:]]
 
-    return 0
+    return centroids
+
 
 # get the file name from the user
 file_name = input("Enter the input file name: ")
@@ -65,4 +71,5 @@ else:
             # store all the unfiltered examples as list
             all_examples = file.readlines()
 
-        print(parse_examples())
+        # get initial centroids
+        print(initial_centroids())
