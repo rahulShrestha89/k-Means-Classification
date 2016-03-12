@@ -68,18 +68,20 @@ def make_clusters():
     examples = parse_examples()     # stores parsed examples from text file
     centroids = initial_centroids()     # stores initial centroids
 
-    # Consider two cluster centers with two different data set.
-    # If data_A is closer to cluster_1 than cluster_B
-    # then cluster_B contains data_A
+    # stores distance between a data set and all other centroids
+    # as {"centroid_key" : distance between data and centroid}
+    distance_dict = {}
 
     # loop through all the examples
-    for i_key in parse_examples().keys():
+    for i_key in examples:
         # loop through both of the centroids i.e. cluster centers
-        for j_key in initial_centroids().keys():
-            print(examples[i_key])
-            print(centroids[j_key])
-            print(calculate_euclidean_distance(examples[i_key], centroids[j_key]))
-            print()
+        for j_key in centroids:
+            distance_dict[j_key] = calculate_euclidean_distance(examples[i_key], centroids[j_key])
+
+        # Consider two cluster centers with two different data set.
+        # And, If data_A is closer to cluster_A than cluster_B
+        # then cluster_A contains data_A
+
     return 0
 
 
