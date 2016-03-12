@@ -24,7 +24,7 @@ def parse_examples():
     coordinates = {}
     for values in all_examples:
         split_list = values.split(',')
-        coordinates[split_list[0]] = [int(val.rstrip()) for val in split_list[1:]]
+        coordinates[split_list[0]] = [float(val.rstrip()) for val in split_list[1:]]
 
     return coordinates
 
@@ -40,7 +40,7 @@ def initial_centroids():
     # select (number of clusters) centroids from the text file (dictionary is unordered)
     for values in all_examples[:number_of_clusters]:
         split_list = values.split(',')
-        centroids[split_list[0]] = [int(val.rstrip()) for val in split_list[1:]]
+        centroids[split_list[0]] = [float(val.rstrip()) for val in split_list[1:]]
 
     return centroids
 
