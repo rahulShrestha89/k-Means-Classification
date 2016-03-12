@@ -13,6 +13,7 @@
 #   Following	N	lines	contain	X+1 values	containing	the	data	set,	separated	by	comma
 
 import os
+import math
 
 
 # create a dictionary of coordinates i.e. keys with multiple values
@@ -51,7 +52,13 @@ def calculate_euclidean_distance(example, centroid):
 
     distance = 0
 
-    return 0
+    # make sure that list size is equal
+    if len(example) != len(centroid):
+        print("Not the same Dimensions")
+    else:
+        for i in range(len(example)):
+            distance += (example[i]-centroid[i]) ** 2
+    return math.sqrt(distance)
 
 
 # Assign objects(examples) to their closest cluster center (centroids)
@@ -69,7 +76,10 @@ def make_clusters():
     for i_key in parse_examples().keys():
         # loop through both of the centroids i.e. cluster centers
         for j_key in initial_centroids().keys():
-            calculate_euclidean_distance(examples[i_key], centroids[j_key])
+            print(examples[i_key])
+            print(centroids[j_key])
+            print(calculate_euclidean_distance(examples[i_key], centroids[j_key]))
+            print()
     return 0
 
 
