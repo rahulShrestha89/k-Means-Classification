@@ -58,8 +58,13 @@ def calculate_euclidean_distance(example, centroid):
     else:
         for i in range(len(example)):
             distance += (example[i]-centroid[i]) ** 2
+
     return math.sqrt(distance)
 
+
+# Consider two cluster centers with two different data set.
+# And, If data_A is closer to cluster_A than cluster_B
+# then cluster_A contains data_A
 
 # Assign objects(examples) to their closest cluster center (centroids)
 # according to the Euclidean distance function
@@ -70,8 +75,7 @@ def make_clusters():
 
     # stores the clusters as list of dictionaries
     # where each dictionary is a cluster and consists of examples(data sets)
-    # First: get the cluster centers
-    # and append to the list
+    # First: get the cluster centers and append to the list
     clusters_list = [{k: v} for k, v in centroids.items()]
 
     # stores distance between a data set and all other centroids
@@ -84,18 +88,17 @@ def make_clusters():
         for j_key in centroids:
             distance_dict[j_key] = calculate_euclidean_distance(examples[i_key], centroids[j_key])
 
-        # Consider two cluster centers with two different data set.
-        # And, If data_A is closer to cluster_A than cluster_B
-        # then cluster_A contains data_A
-
         # find key with the minimum distance value
-        cluster = min(distance_dict, key=distance_dict.get)
-        # print(cluster)
+        cluster_key = min(distance_dict, key=distance_dict.get)
 
-        # holds the clusters dict and appends to the list
-        cluster_dict = {}
+        # find the dictionary in the cluster_list
+        # that contains cluster_key, and append example to
+        # that dictionary
+        for index, value in enumerate(clusters_list):
+            if cluster_key in value:
+                value[i_key] = examples[i_key]
 
-    return 0
+    return clusters_list
 
 
 # get the file name from the user
