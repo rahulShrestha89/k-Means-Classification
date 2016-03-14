@@ -95,7 +95,7 @@ def make_clusters():
         # that contains cluster_key, and append example to
         # that dictionary
         for index, value in enumerate(clusters_list):
-            if cluster_key in value:
+            if cluster_key in value:    # finds the dictionary with cluster_key
                 value[i_key] = examples[i_key]
 
     return clusters_list
