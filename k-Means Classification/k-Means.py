@@ -105,18 +105,16 @@ def recalculate_centroids():
 
     clusters = make_clusters()
 
-    # stores new cluster centers
+    # stores new cluster centers in a dictionary
     centroids = {}
 
     for index, dictionary in enumerate(clusters):        # loop through cluster list
-        for key in dictionary:                           # loop through dictionary
-            for i in range(number_of_attributes):   # loop through coordinates
-                centroids[index] = find_average()
-                # sum(value[key][i] for key in value)/len(D)
-                print(dictionary[key][i])
-    return 0
+        centroids[index] = find_average(dictionary)
+
+    return centroids
 
 
+# calculates the average of the cluster dimension points
 def find_average(dictionary):
 
     return tuple(statistics.mean(dictionary[key][i] for key in dictionary) for i in range(number_of_attributes))
@@ -148,5 +146,19 @@ else:
             # store all the unfiltered examples as list
             all_examples = file.readlines()
 
-        recalculate_centroids()
+        #
+        if number_of_attributes == 0 or number_of_clusters == 0:
+            print("\nNot enough information for clustering.")
+
+        #
+        elif number_of_examples == number_of_clusters:
+            i = 0
+            for key, value in parse_examples().items():
+                print("\nCluster {} :>".format(i))
+                print("{} = {}\n".format(key, value))
+                i += 1
+
+        #
+        else:
+            recalculate_centroids()
 
