@@ -14,6 +14,7 @@
 
 import os
 import math
+import statistics
 
 
 # create a dictionary of coordinates i.e. keys with multiple values
@@ -62,16 +63,12 @@ def calculate_euclidean_distance(example, centroid):
     return math.sqrt(distance)
 
 
-# Consider two cluster centers with two different data set.
-# And, If data_A is closer to cluster_A than cluster_B
-# then cluster_A contains data_A
-
 # Assign objects(examples) to their closest cluster center (centroids)
 # according to the Euclidean distance function
 def make_clusters():
 
-    examples = parse_examples()     # stores parsed examples from text file
-    centroids = initial_centroids()     # stores initial centroids
+    examples = parse_examples()
+    centroids = initial_centroids()
 
     # stores the clusters as list of dictionaries
     # where each dictionary is a cluster and consists of examples(data sets)
@@ -101,6 +98,30 @@ def make_clusters():
     return clusters_list
 
 
+# get the average of the clusters and
+# assign different other k number of cluster centroids
+# keep doing until the cluster centers are stable(fixed)
+def recalculate_centroids():
+
+    clusters = make_clusters()
+
+    # stores new cluster centers
+    centroids = {}
+
+    for index, dictionary in enumerate(clusters):        # loop through cluster list
+        for key in dictionary:                           # loop through dictionary
+            for i in range(number_of_attributes):   # loop through coordinates
+                centroids[index] = find_average()
+                # sum(value[key][i] for key in value)/len(D)
+                print(dictionary[key][i])
+    return 0
+
+
+def find_average(dictionary):
+
+    return tuple(statistics.mean(dictionary[key][i] for key in dictionary) for i in range(number_of_attributes))
+
+
 # get the file name from the user
 file_name = input("Enter the input file name: ")
 
@@ -127,5 +148,5 @@ else:
             # store all the unfiltered examples as list
             all_examples = file.readlines()
 
-        make_clusters()
+        recalculate_centroids()
 
