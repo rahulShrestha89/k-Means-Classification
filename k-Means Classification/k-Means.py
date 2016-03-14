@@ -65,16 +65,21 @@ def calculate_euclidean_distance(example, centroid):
 # according to the Euclidean distance function
 def make_clusters():
 
+    examples = parse_examples()     # stores parsed examples from text file
+    centroids = initial_centroids()     # stores initial centroids
+
     # stores the clusters as list of dictionaries
     # where each dictionary is a cluster and consists of examples(data sets)
     clusters_list = []
 
-    examples = parse_examples()     # stores parsed examples from text file
-    centroids = initial_centroids()     # stores initial centroids
-
     # stores distance between a data set and all other centroids
     # as {"centroid_key" : distance between data and centroid}
     distance_dict = {}
+
+    # get the cluster centers
+    # and append to the list
+    clusters_list = [{k: v} for k, v in centroids.items()]
+    print(clusters_list)
 
     # loop through all the examples
     for i_key in examples:
@@ -88,7 +93,7 @@ def make_clusters():
 
         # find key with the minimum distance value
         cluster = min(distance_dict, key=distance_dict.get)
-        print(cluster)
+        # print(cluster)
 
         # holds the clusters dict and appends to the list
         cluster_dict = {}
