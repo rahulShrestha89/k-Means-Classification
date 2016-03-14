@@ -70,16 +70,13 @@ def make_clusters():
 
     # stores the clusters as list of dictionaries
     # where each dictionary is a cluster and consists of examples(data sets)
-    clusters_list = []
+    # First: get the cluster centers
+    # and append to the list
+    clusters_list = [{k: v} for k, v in centroids.items()]
 
     # stores distance between a data set and all other centroids
     # as {"centroid_key" : distance between data and centroid}
     distance_dict = {}
-
-    # get the cluster centers
-    # and append to the list
-    clusters_list = [{k: v} for k, v in centroids.items()]
-    print(clusters_list)
 
     # loop through all the examples
     for i_key in examples:
