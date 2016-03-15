@@ -73,7 +73,7 @@ def make_clusters():
     # stores the clusters as list of dictionaries
     # where each dictionary is a cluster and consists of examples(data sets)
     # First: get the cluster centers and append to the list
-    clusters_list = [{k: v} for k, v in centroids.items()]
+    clusters_list = [{ki: v} for ki, v in centroids.items()]
 
     # stores distance between a data set and all other centroids
     # as {"centroid_key" : distance between data and centroid}
@@ -91,9 +91,9 @@ def make_clusters():
         # find the dictionary in the cluster_list
         # that contains cluster_key, and append example to
         # that dictionary
-        for index, value in enumerate(clusters_list):
-            if cluster_key in value:    # finds the dictionary with cluster_key
-                value[i_key] = examples[i_key]
+        for index, values in enumerate(clusters_list):
+            if cluster_key in values:    # finds the dictionary with cluster_key
+                values[i_key] = examples[i_key]
 
     return clusters_list
 
@@ -146,19 +146,23 @@ else:
             # store all the unfiltered examples as list
             all_examples = file.readlines()
 
-        #
+        # for no attributes or clusters
         if number_of_attributes == 0 or number_of_clusters == 0:
             print("\nNot enough information for clustering.")
 
-        #
+        # for equal number of examples and clusters
         elif number_of_examples == number_of_clusters:
             i = 0
-            for key, value in parse_examples().items():
+            for k, value in parse_examples().items():
                 print("\nCluster {} :>".format(i))
-                print("{} = {}\n".format(key, value))
+                print("{} = {}\n".format(k, value))
                 i += 1
 
-        #
+        # for clusters greater than examples
+        elif number_of_clusters > number_of_examples:
+            print("\nClusters cannot be greater than examples.")
+
+        # other cases
         else:
             recalculate_centroids()
 
