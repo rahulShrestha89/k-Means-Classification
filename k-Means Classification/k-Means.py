@@ -151,14 +151,6 @@ def find_average(dictionary):
     return tuple(statistics.mean(dictionary[key][i] for key in dictionary) for i in range(number_of_attributes))
 
 
-# print the clusters with it's respective cluster center
-def print_clusters(clusters):
-
-
-    print(clusters)
-    return 0
-
-
 # get the file name from the user
 file_name = input("Enter the input file name: ")
 
@@ -210,13 +202,19 @@ else:
 
             while looking:
                 if first_loop:
-                    if initial_centroids() == recalculate_centroids():
+                    previous_centroids = recalculate_centroids()
+                    if initial_centroids() == previous_centroids:
                         looking = False
                     first_loop = False
 
                 else:
-                    make_clusters()
+                    old_centroids = previous_centroids
+                    print(old_centroids)
+                    initial_clusters = make_clusters()
+                    updated_centroids = recalculate_centroids()
+                    print(updated_centroids)
                     looking = False
+
 
 
 
