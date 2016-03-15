@@ -152,11 +152,11 @@ else:
 
         # for equal number of examples and clusters
         elif number_of_examples == number_of_clusters:
-            i = 0
+            inc = 0
             for k, value in parse_examples().items():
-                print("\nCluster {} :>".format(i))
+                print("\nCluster {} :>".format(inc))
                 print("{} = {}\n".format(k, value))
-                i += 1
+                inc += 1
 
         # for clusters greater than examples
         elif number_of_clusters > number_of_examples:
