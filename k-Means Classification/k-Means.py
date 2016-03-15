@@ -209,11 +209,10 @@ else:
 
                 else:
                     old_centroids = previous_centroids
-                    print(old_centroids)
                     initial_clusters = make_clusters()
                     updated_centroids = recalculate_centroids()
-                    print(updated_centroids)
-                    looking = False
+                    if old_centroids != updated_centroids:
+                        looking = False
 
 
 
