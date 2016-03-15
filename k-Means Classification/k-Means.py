@@ -15,6 +15,7 @@
 import os
 import math
 import statistics
+import sys
 
 
 # create a dictionary of coordinates i.e. keys with multiple values
@@ -96,7 +97,6 @@ def make_clusters():
                 if cluster_key in values:    # finds the dictionary with cluster_key
                     values[i_key] = examples[i_key]
 
-        print(clusters_list)
         return clusters_list
 
     else:
@@ -125,7 +125,6 @@ def make_clusters():
                 if key_i in dic:
                     dic.pop(key_i)
 
-        print(next_clusters_list)
         return next_clusters_list
 
 
@@ -214,6 +213,13 @@ else:
                     if old_centroids != updated_centroids:
                         looking = False
 
+                        # write to a text file
+                        sys.stdout = open('out.txt', 'w')
+                        inc = 1
+                        for indexes, dictionaries in enumerate(initial_clusters):
+                            print("\nCluster {} :>".format(inc))
+                            inc += 1
+                            print(dictionaries)
 
 
 
