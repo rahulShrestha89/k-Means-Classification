@@ -3,9 +3,9 @@ Implementation of k-Means Clustering Algorithm.
 
 Rahul Shrestha
 
-Phase: Still under developement. 
+Phase: beta development phase. 
 
-File Structure: readme.txt, k-Means.py and Contains few test files!
+File Structure: readme.txt, k-Means.py and Contains few test and output files!
 
 Language: Python
 
