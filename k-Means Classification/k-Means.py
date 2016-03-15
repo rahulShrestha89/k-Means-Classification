@@ -67,35 +67,60 @@ def calculate_euclidean_distance(example, centroid):
 # according to the Euclidean distance function
 def make_clusters():
 
-    examples = parse_examples()
-    centroids = initial_centroids()
+    if first_loop:
+        examples = parse_examples()
+        centroids = initial_centroids()
 
-    # stores the clusters as list of dictionaries
-    # where each dictionary is a cluster and consists of examples(data sets)
-    # First: get the cluster centers and append to the list
-    clusters_list = [{ki: v} for ki, v in centroids.items()]
+        # stores the clusters as list of dictionaries
+        # where each dictionary is a cluster and consists of examples(data sets)
+        # First: get the cluster centers and append to the list
+        clusters_list = [{ki: v} for ki, v in centroids.items()]
 
-    # stores distance between a data set and all other centroids
-    # as {"centroid_key" : distance between data and centroid}
-    distance_dict = {}
+        # stores distance between a data set and all other centroids
+        # as {"centroid_key" : distance between data and centroid}
+        distance_dict = {}
 
-    # loop through all the examples
-    for i_key in examples:
-        # loop through both of the centroids i.e. cluster centers
-        for j_key in centroids:
-            distance_dict[j_key] = calculate_euclidean_distance(examples[i_key], centroids[j_key])
+        # loop through all the examples
+        for i_key in examples:
+            # loop through both of the centroids i.e. cluster centers
+            for j_key in centroids:
+                distance_dict[j_key] = calculate_euclidean_distance(examples[i_key], centroids[j_key])
 
-        # find key with the minimum distance value
-        cluster_key = min(distance_dict, key=distance_dict.get)
+            # find key with the minimum distance value
+            cluster_key = min(distance_dict, key=distance_dict.get)
 
-        # find the dictionary in the cluster_list
-        # that contains cluster_key, and append example to
-        # that dictionary
-        for index, values in enumerate(clusters_list):
-            if cluster_key in values:    # finds the dictionary with cluster_key
-                values[i_key] = examples[i_key]
+            # find the dictionary in the cluster_list
+            # that contains cluster_key, and append example to
+            # that dictionary
+            for index, values in enumerate(clusters_list):
+                if cluster_key in values:    # finds the dictionary with cluster_key
+                    values[i_key] = examples[i_key]
 
-    return clusters_list
+        print(clusters_list)
+        return clusters_list
+
+    else:
+        examples = initial_clusters
+        centroids = recalculate_centroids()
+
+        next_clusters_list = [{ki: v} for ki, v in centroids.items()]
+
+        next_distance_dict = {}
+
+        for index, dictionary in enumerate(examples):
+            for i_key in dictionary:
+                for j_key in centroids:
+                    next_distance_dict[j_key] = calculate_euclidean_distance(dictionary[i_key], centroids[j_key])
+
+                # find key with the minimum distance value
+                cluster_key = min(next_distance_dict, key=next_distance_dict.get)
+
+                for ind, values in enumerate(next_clusters_list):
+                    if cluster_key in values:    # finds the dictionary with cluster_key
+                        values[i_key] = dictionary[i_key]
+
+        print(next_clusters_list)
+        return next_clusters_list
 
 
 # get the average of the clusters and
@@ -103,7 +128,7 @@ def make_clusters():
 # keep doing until the cluster centers are stable(fixed)
 def recalculate_centroids():
 
-    clusters = make_clusters()
+    clusters = initial_clusters
 
     # stores new cluster centers in a dictionary
     centroids = {}
@@ -118,6 +143,14 @@ def recalculate_centroids():
 def find_average(dictionary):
 
     return tuple(statistics.mean(dictionary[key][i] for key in dictionary) for i in range(number_of_attributes))
+
+
+# print the clusters with it's respective cluster center
+def print_clusters(clusters):
+
+
+    print(clusters)
+    return 0
 
 
 # get the file name from the user
@@ -146,13 +179,16 @@ else:
             # store all the unfiltered examples as list
             all_examples = file.readlines()
 
+        first_loop = True
+        looking = True
+
         # for no attributes or clusters
         if number_of_attributes == 0 or number_of_clusters == 0:
             print("\nNot enough information for clustering.")
 
         # for equal number of examples and clusters
         elif number_of_examples == number_of_clusters:
-            inc = 0
+            inc = 1
             for k, value in parse_examples().items():
                 print("\nCluster {} :>".format(inc))
                 print("{} = {}\n".format(k, value))
@@ -164,5 +200,17 @@ else:
 
         # other cases
         else:
-            recalculate_centroids()
+            initial_clusters = make_clusters()
+
+            while looking:
+                if first_loop:
+                    if initial_centroids() == recalculate_centroids():
+                        looking = False
+                    first_loop = False
+
+                else:
+                    make_clusters()
+                    looking = False
+
+
 
