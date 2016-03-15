@@ -119,6 +119,12 @@ def make_clusters():
                     if cluster_key in values:    # finds the dictionary with cluster_key
                         values[i_key] = dictionary[i_key]
 
+        # remove the cluster centers from the cluster
+        for key_i in centroids:
+            for index, dic in enumerate(next_clusters_list):
+                if key_i in dic:
+                    dic.pop(key_i)
+
         print(next_clusters_list)
         return next_clusters_list
 
